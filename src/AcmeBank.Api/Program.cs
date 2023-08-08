@@ -3,6 +3,9 @@ using AcmeBank.Contracts;
 using AcmeBank.Persistence;
 using BackendData.Security;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +13,46 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext("Name=ConnectionStrings:AcmeBank");
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1", //TODO: Api versioning
+        Title = "Acme Bank API",
+        Description = "An API for managing customers, accounts and movements",
+        TermsOfService = new Uri("https://engineering.acmebank.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Engineering",
+            Url = new Uri("https://engineering.acmebank.com/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "License",
+            Url = new Uri("https://engineering.acmebank.com/license")
+        }
+    });
+    options.EnableAnnotations();
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseExceptionHandler("/error");
+}
 
-app.UseExceptionHandler("/error");
+
 app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
 {
     Exception? exception = httpContextAccessor.HttpContext?

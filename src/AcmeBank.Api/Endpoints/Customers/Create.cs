@@ -3,6 +3,8 @@ using AcmeBank.Persistence.Entities;
 using Ardalis.ApiEndpoints;
 using BackendData.Security;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Net.Mime;
 
 namespace AcmeBank.Api.Endpoints.Customers
 {
@@ -20,14 +22,34 @@ namespace AcmeBank.Api.Endpoints.Customers
         }
 
         /// <summary>
-        /// Creates a new Customer
+        /// Creates a new customer
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     {
+        ///       "fullName": "Juan Perez",
+        ///       "gender": "Male",
+        ///       "age": 60,
+        ///       "identityNumber": 2147483647,
+        ///       "address": "Barrio 13 de Enero",
+        ///       "phoneNumber": "07563256",
+        ///       "password": "123",
+        ///       "isActive": true
+        ///     }
+        /// 
+        /// </remarks>
+        /// <response code = "201" >Returns customer created</response>
+        /// <response code = "400" >Bad request</response>  
+        /// <returns></returns>
         [HttpPost("customers")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(OperationId = "CreateCustomer", Tags = new[] { "Customers" })]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateCustomerResult))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         public override async Task<ActionResult<CreateCustomerResult>> HandleAsync(
-            [FromBody] CreateCustomerRequest request,
-            CancellationToken cancellationToken)
+                [FromBody] CreateCustomerRequest request,
+                CancellationToken cancellationToken)
         {
 
 
