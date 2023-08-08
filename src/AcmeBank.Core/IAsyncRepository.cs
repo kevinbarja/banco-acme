@@ -6,7 +6,7 @@
 
         Task<IReadOnlyList<TEntity>> ListAllAsync(int perPage, int page, CancellationToken cancellationToken);
 
-        void Add(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken);
 
         void Update(TEntity entity);
         void Delete(TEntity entity);

@@ -9,7 +9,7 @@ public partial class Movement
 
     public DateTime Date { get; set; }
 
-    public int Type { get; set; }
+    public short Type { get; set; }
 
     public decimal Amount { get; set; }
 

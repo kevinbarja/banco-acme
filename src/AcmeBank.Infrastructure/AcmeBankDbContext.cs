@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AcmeBank.Persistence.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AcmeBank.Persistence
 {
@@ -6,7 +7,15 @@ namespace AcmeBank.Persistence
     {
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-
+            // TPT table per type
+            modelBuilder.Entity<Person>().UseTptMappingStrategy();
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(k => k.Id)
+                        .ValueGeneratedOnAdd()
+                        .IsRequired();
+            });
         }
     }
 }

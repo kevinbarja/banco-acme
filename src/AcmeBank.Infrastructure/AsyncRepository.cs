@@ -25,9 +25,12 @@ namespace AcmeBank.Persistence
             return await _dbContext.Set<TEntity>().Skip(perPage * (page - 1)).Take(perPage).ToListAsync(cancellationToken);
         }
 
-        public void Add(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            _dbContext.Add(entity);
+            await _dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return entity;
         }
 
         public void Update(TEntity entity)

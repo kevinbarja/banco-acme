@@ -1,4 +1,6 @@
-﻿using AcmeBank.Persistence.Entities;
+﻿using System;
+using System.Collections.Generic;
+using AcmeBank.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AcmeBank.Persistence;
@@ -22,9 +24,6 @@ public partial class AcmeBankDbContext : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasIndex(e => e.Number, "UQ__Accounts__78A1A19D790BA33B").IsUnique();
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.InitialBalance).HasColumnType("decimal(17, 5)");
             entity.Property(e => e.Number).HasMaxLength(50);
 
@@ -45,7 +44,6 @@ public partial class AcmeBankDbContext : DbContext
 
         modelBuilder.Entity<Movement>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Amount).HasColumnType("decimal(17, 5)");
             entity.Property(e => e.Balance).HasColumnType("decimal(17, 5)");
             entity.Property(e => e.Date).HasColumnType("datetime");
@@ -57,10 +55,9 @@ public partial class AcmeBankDbContext : DbContext
 
         modelBuilder.Entity<Person>(entity =>
         {
-            entity.HasIndex(e => e.IdentityNumber, "UQ__People__6354A73F6E161DA3").IsUnique();
-
             entity.Property(e => e.Address).HasMaxLength(300);
             entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

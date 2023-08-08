@@ -9,11 +9,11 @@ public partial class Account
 
     public string Number { get; set; } = null!;
 
-    public int Type { get; set; }
+    public short Type { get; set; }
 
     public decimal InitialBalance { get; set; }
 
-    public int Status { get; set; }
+    public short Status { get; set; }
 
     public int CustomerId { get; set; }
 

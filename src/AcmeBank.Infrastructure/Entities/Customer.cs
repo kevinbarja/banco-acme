@@ -9,7 +9,7 @@ public partial class Customer
 
     public string Password { get; set; } = null!;
 
-    public int Status { get; set; }
+    public short Status { get; set; }
 
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
