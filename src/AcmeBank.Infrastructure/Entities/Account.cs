@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace AcmeBank.Persistence.Entities;
+
+public partial class Account
+{
+    public int Id { get; set; }
+
+    public string Number { get; set; } = null!;
+
+    public int Type { get; set; }
+
+    public decimal InitialBalance { get; set; }
+
+    public int Status { get; set; }
+
+    public int CustomerId { get; set; }
+
+    public virtual Customer Customer { get; set; } = null!;
+
+    public virtual ICollection<Movement> Movements { get; set; } = new List<Movement>();
+}
