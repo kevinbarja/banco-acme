@@ -1,7 +1,6 @@
 using AcmeBank.Api;
 using AcmeBank.Contracts;
 using AcmeBank.Persistence;
-using BackendData.Security;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext("Name=ConnectionStrings:AcmeBank");
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
-builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();

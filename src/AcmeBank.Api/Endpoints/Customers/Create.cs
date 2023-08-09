@@ -2,7 +2,6 @@
 using AcmeBank.Persistence.Entities;
 using Ardalis.ApiEndpoints;
 using AutoMapper;
-using BackendData.Security;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
@@ -15,15 +14,12 @@ namespace AcmeBank.Api.Endpoints.Customers
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Customer> _repository;
-        private readonly IPasswordHasher _passwordHasher;
 
         public Create(
             IAsyncRepository<Customer> repository,
-            IPasswordHasher passwordHasher,
             IMapper mapper)
         {
-            _repository = repository;
-            _passwordHasher = passwordHasher;
+            _repository = repository
             _mapper = mapper;
         }
 
