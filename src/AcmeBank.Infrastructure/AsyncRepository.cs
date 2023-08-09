@@ -40,6 +40,12 @@ namespace AcmeBank.Persistence
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+        {
+            _dbContext.Set<TEntity>().Remove(entity);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task<IReadOnlyList<TEntity>> ListAllAsync(CancellationToken cancellationToken)
         {
             return await _dbContext.Set<TEntity>().ToListAsync(cancellationToken);

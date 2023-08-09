@@ -19,7 +19,7 @@ namespace AcmeBank.Api.Endpoints.Customers
             IAsyncRepository<Customer> repository,
             IMapper mapper)
         {
-            _repository = repository
+            _repository = repository;
             _mapper = mapper;
         }
 
