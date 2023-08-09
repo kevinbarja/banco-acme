@@ -47,6 +47,7 @@ public partial class AcmeBankDbContext : DbContext
             entity.Property(e => e.Amount).HasColumnType("decimal(17, 5)");
             entity.Property(e => e.Balance).HasColumnType("decimal(17, 5)");
             entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.InitialBalance).HasColumnType("decimal(17, 5)");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Movements)
                 .HasForeignKey(d => d.AccountId)

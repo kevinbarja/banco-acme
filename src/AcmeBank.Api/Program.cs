@@ -1,3 +1,4 @@
+using AcmeBank.Api;
 using AcmeBank.Contracts;
 using AcmeBank.Persistence;
 using AcmeBank.Persistence.Repositories;
@@ -16,6 +17,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.Configure<ApiConfig>(builder.Configuration.GetSection(nameof(ApiConfig)));
 
 //TODO: Move to extension menthods
 builder.Services.AddEndpointsApiExplorer();
@@ -61,7 +63,7 @@ app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
         .Features.Get<IExceptionHandlerFeature>()?
         .Error;
 
-    //TODO: Log exception
+    //TODO: Log exception and move to handler class
     return exception is BusinessLogicException e
         ? Results.Problem(
             title: e.Message,

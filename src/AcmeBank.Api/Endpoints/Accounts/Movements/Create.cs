@@ -3,6 +3,7 @@ using AcmeBank.Persistence.Entities;
 using Ardalis.ApiEndpoints;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
 
@@ -15,14 +16,17 @@ namespace AcmeBank.Api.Endpoints.Accounts.Movements
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Movement> _movementRepository;
         private readonly IAsyncRepository<Account> _accountRepository;
+        private readonly ApiConfig _apiConfig;
 
         public Create(IMapper mapper,
             IAsyncRepository<Movement> movementRepository,
-            IAsyncRepository<Account> accountRepository)
+            IAsyncRepository<Account> accountRepository,
+            IOptions<ApiConfig> apiConfig)
         {
             _mapper = mapper;
             _movementRepository = movementRepository;
             _accountRepository = accountRepository;
+            _apiConfig = apiConfig.Value;
         }
 
         /// <summary>
@@ -54,13 +58,24 @@ namespace AcmeBank.Api.Endpoints.Accounts.Movements
             {
                 return BadRequest();
             }
+
+
+
             var movementAmount = request.Body.Amount;
             var movement = new Movement();
             movement.Balance = account.InitialBalance;
             movement.Date = DateTime.Now;
 
             //TODO: Convet type to computed field
-            movement.Type = (movementAmount > 0) ? (int)MovementType.Credit : (int)MovementType.Credit;
+            if (movementAmount > 0)
+            {
+                movement.Type = (short)MovementType.Credit;
+            }
+            else
+            {
+                movement.Type = (short)MovementType.Debit;
+            }
+
             movement.Amount = movementAmount;
             movement.AccountId = request.AccountId;
 
