@@ -22,6 +22,16 @@ namespace AcmeBank.Api
                 .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
                 .ForMember(ccr => ccr.Gender, customer => customer.MapFrom(c => (Gender)c.Gender)
             );
+            CreateMap<Customer, PatchCustomerDocument>()
+                .ForMember(ccr => ccr.Id, customer => customer.MapFrom(c => c.PersonId))
+                .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
+                .ForMember(ccr => ccr.Gender, customer => customer.MapFrom(c => (Gender)c.Gender)
+            );
+            CreateMap<PatchCustomerDocument, Customer>()
+                .ForMember(c => c.Status, request => request.MapFrom(r => r.IsActive))
+                .ForMember(c => c.Gender, request => request.MapFrom(r => (int)r.Gender)
+            );
+
             CreateMap<Customer, CustomerResult>()
                 .ForMember(ccr => ccr.Id, customer => customer.MapFrom(c => c.PersonId))
                 .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
@@ -33,6 +43,11 @@ namespace AcmeBank.Api
                 .ForMember(c => c.Gender, request => request.MapFrom(r => (int)r.Body.Gender)
             );
             CreateMap<Customer, UpdateCustomerResult>()
+                .ForMember(ccr => ccr.Id, customer => customer.MapFrom(c => c.PersonId))
+                .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
+                .ForMember(ccr => ccr.Gender, customer => customer.MapFrom(c => (Gender)c.Gender)
+            );
+            CreateMap<Customer, PatchCustomerResult>()
                 .ForMember(ccr => ccr.Id, customer => customer.MapFrom(c => c.PersonId))
                 .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
                 .ForMember(ccr => ccr.Gender, customer => customer.MapFrom(c => (Gender)c.Gender)
