@@ -6,6 +6,8 @@
 
         Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken);
 
+        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+
         Task<IReadOnlyList<TEntity>> ListAllAsync(CancellationToken cancellationToken);
 
         Task<IReadOnlyList<TEntity>> ListAllAsync(int perPage, int page, CancellationToken cancellationToken);

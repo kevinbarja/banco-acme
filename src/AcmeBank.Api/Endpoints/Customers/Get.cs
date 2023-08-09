@@ -41,7 +41,7 @@ namespace AcmeBank.Api.Endpoints.Customers
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
         public override async Task<ActionResult<CustomerResult>> HandleAsync(
             int id,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             var customer = await _repository.GetByIdAsync(id, cancellationToken);
 

@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Version = "v1", //TODO: Api versioning
+        Version = "v1",
         Title = "Acme Bank API",
         Description = "An API for managing customers, accounts and movements",
         TermsOfService = new Uri("https://engineering.acmebank.com/terms"),
@@ -72,5 +72,7 @@ app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
 
 app.MapControllers();
 //TODO: Add health checks
+//TODO: Add security
+//TODO: Add versioning
 app.Logger.LogInformation("Starting web host ({ApplicationName})...", "AcmeBank API");
 app.Run();
