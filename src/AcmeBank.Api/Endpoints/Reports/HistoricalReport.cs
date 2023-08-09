@@ -1,4 +1,5 @@
-﻿using AcmeBank.Contracts;
+﻿using AcmeBank.Api.Pagging;
+using AcmeBank.Contracts;
 using Ardalis.ApiEndpoints;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -8,7 +9,7 @@ namespace AcmeBank.Api.Endpoints.Reports
 {
     public class HistoricalReport : EndpointBaseAsync
             .WithRequest<HistoricalReportRequest>
-            .WithActionResult
+            .WithActionResult<PagedResult<HistoricalReportData>>
     {
         private readonly IReportRepository _repository;
 
@@ -32,13 +33,13 @@ namespace AcmeBank.Api.Endpoints.Reports
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerOperation(OperationId = "GetHistoricalReport", Tags = new[] { "Reports" })]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<HistoricalReportData>))]
-        public override async Task<ActionResult> HandleAsync(
+        public override async Task<ActionResult<PagedResult<HistoricalReportData>>> HandleAsync(
             [FromQuery] HistoricalReportRequest request,
             CancellationToken cancellationToken)
         {
             var result = await _repository.GetHistoricalReportAsync(
                 request.Page, request.PerPage, request.StartDate, request.EndDate, request.CustomerId, cancellationToken);
-            return Ok(result);
+            return Ok(new PagedResult<HistoricalReportData>(result, request));
         }
     }
 }
