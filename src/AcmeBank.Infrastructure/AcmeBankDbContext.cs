@@ -16,10 +16,10 @@ namespace AcmeBank.Persistence
                         .ValueGeneratedOnAdd()
                         .IsRequired();
             });
-            //Handling concurrency conflicts
-            modelBuilder.Entity<Account>()
-                .Property(p => p.Version)
-                .IsRowVersion();
+            ////Handling concurrency conflicts
+            //modelBuilder.Entity<Account>()
+            //    .Property(p => p.Version)
+            //    .IsRowVersion();
         }
     }
 }

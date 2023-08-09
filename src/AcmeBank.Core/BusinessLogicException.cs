@@ -1,4 +1,4 @@
-﻿namespace AcmeBank.Api
+﻿namespace AcmeBank.Contracts
 {
     public class BusinessLogicException : Exception
     {

@@ -2,6 +2,6 @@
 {
     public partial class Account
     {
-        public byte[]? Version { get; set; }
+        //public byte[]? Version { get; set; }
     }
 }

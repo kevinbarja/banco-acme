@@ -1,4 +1,3 @@
-using AcmeBank.Api;
 using AcmeBank.Contracts;
 using AcmeBank.Persistence;
 using Microsoft.AspNetCore.Diagnostics;
@@ -14,7 +13,9 @@ builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>)
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
-builder.Services.AddAutoMapper(typeof(AutoMapping));
+builder.Services.AddAutoMapper(typeof(Program));
+
+//TODO: Move to extension menthods
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -45,11 +46,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //CORS
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseExceptionHandler("/error");
 }
+//TODO: Add config for prod env. E.g. cors
 
 
 app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
@@ -62,7 +63,7 @@ app.Map("/error", (IHttpContextAccessor httpContextAccessor) =>
     return exception is BusinessLogicException e
         ? Results.Problem(
             title: e.Message,
-            statusCode: 213)
+            statusCode: StatusCodes.Status428PreconditionRequired)
         : Results.Problem(
             title: "Internal error",
             statusCode: StatusCodes.Status500InternalServerError);

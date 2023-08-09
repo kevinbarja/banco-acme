@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AcmeBank.Persistence.Entities;
+﻿namespace AcmeBank.Persistence.Entities;
 
 public partial class Account
 {
@@ -13,7 +10,7 @@ public partial class Account
 
     public decimal InitialBalance { get; set; }
 
-    public short Status { get; set; }
+    public bool Status { get; set; }
 
     public int CustomerId { get; set; }
 

@@ -2,16 +2,11 @@
 using AcmeBank.Persistence.Entities;
 using AutoMapper;
 
-namespace AcmeBank.Api
+namespace AcmeBank.Api.Mapping
 {
-    public class AutoMapping : Profile
+    public class CustomerProfile : Profile
     {
-        public AutoMapping()
-        {
-            MapCustomer();
-        }
-
-        private void MapCustomer()
+        public CustomerProfile()
         {
             CreateMap<CreateCustomerRequest, Customer>()
                 .ForMember(c => c.Status, request => request.MapFrom(r => r.IsActive))
