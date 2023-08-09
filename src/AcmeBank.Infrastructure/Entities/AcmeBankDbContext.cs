@@ -57,7 +57,7 @@ public partial class AcmeBankDbContext : DbContext
         {
             entity.Property(e => e.Address).HasMaxLength(300);
             entity.Property(e => e.FullName).HasMaxLength(100);
-            entity.Property(e => e.PhoneNumber).HasMaxLength(100);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,6 +1,7 @@
 ﻿using AcmeBank.Contracts;
 using AcmeBank.Persistence.Entities;
 using Ardalis.ApiEndpoints;
+using AutoMapper;
 using BackendData.Security;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -12,13 +13,18 @@ namespace AcmeBank.Api.Endpoints.Customers
             .WithRequest<CreateCustomerRequest>
             .WithActionResult<CreateCustomerResult>
     {
+        private readonly IMapper _mapper;
         private readonly IAsyncRepository<Customer> _repository;
         private readonly IPasswordHasher _passwordHasher;
 
-        public Create(IAsyncRepository<Customer> repository, IPasswordHasher passwordHasher)
+        public Create(
+            IAsyncRepository<Customer> repository,
+            IPasswordHasher passwordHasher,
+            IMapper mapper)
         {
             _repository = repository;
             _passwordHasher = passwordHasher;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -41,8 +47,7 @@ namespace AcmeBank.Api.Endpoints.Customers
         /// </remarks>
         /// <response code = "201" >Returns customer created</response>
         /// <response code = "400" >Bad request</response>  
-        /// <returns></returns>
-        [HttpPost("customers")]
+        [HttpPost("customers", Name = "CreateCustomer")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerOperation(OperationId = "CreateCustomer", Tags = new[] { "Customers" })]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateCustomerResult))]
@@ -51,23 +56,13 @@ namespace AcmeBank.Api.Endpoints.Customers
                 [FromBody] CreateCustomerRequest request,
                 CancellationToken cancellationToken)
         {
-
-
-
             var customer = new Customer();
-            customer.FullName = request.FullName;
-            customer.Gender = 1;
-            customer.Age = 28;
-            customer.IdentityNumber = 89357122;
-            customer.Address = null;
-            customer.PhoneNumber = null;
-            customer.Password = "123";
-            customer.Status = 1;
-
-            var result = await _repository.AddAsync(customer, cancellationToken);
-
-            var res2 = new CreateCustomerResult();
-            return CreatedAtRoute("customers", new { id = result.Id }, res2);
+            _mapper.Map(request, customer);
+            //TODO: Encrypt password
+            customer = await _repository.AddAsync(customer, cancellationToken);
+            var result = _mapper.Map<CreateCustomerResult>(customer);
+            //TODO: Add logs
+            return CreatedAtRoute("GetCustomer", new { id = result.Id }, result);
         }
     }
 }

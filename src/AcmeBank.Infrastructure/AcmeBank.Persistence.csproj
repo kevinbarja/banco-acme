@@ -14,8 +14,4 @@
     <ProjectReference Include="..\AcmeBank.Core\AcmeBank.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
