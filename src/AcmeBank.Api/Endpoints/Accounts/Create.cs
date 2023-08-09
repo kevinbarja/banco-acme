@@ -52,7 +52,7 @@ namespace AcmeBank.Api.Endpoints.Accounts
             account = await _repository.AddAsync(account, cancellationToken);
             var result = _mapper.Map<CreateAccountResult>(account);
             //TODO: Add logs
-            return CreatedAtRoute("GetAccount", new { id = result.Id }, result);
+            return StatusCode(StatusCodes.Status201Created, result);
         }
     }
 }

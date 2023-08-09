@@ -16,10 +16,6 @@ namespace AcmeBank.Api.Mapping
                 .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
                 .ForMember(ccr => ccr.Type, customer => customer.MapFrom(c => (AccountType)c.Type)
             );
-            CreateMap<Account, AccountResult>()
-                .ForMember(ccr => ccr.IsActive, customer => customer.MapFrom(c => c.Status))
-                .ForMember(ccr => ccr.Type, customer => customer.MapFrom(c => (AccountType)c.Type)
-            );
         }
     }
 }

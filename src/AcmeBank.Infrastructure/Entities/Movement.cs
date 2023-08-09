@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AcmeBank.Persistence.Entities;
+﻿namespace AcmeBank.Persistence.Entities;
 
 public partial class Movement
 {
@@ -9,7 +6,7 @@ public partial class Movement
 
     public DateTime Date { get; set; }
 
-    public short Type { get; set; }
+    public int Type { get; set; }
 
     public decimal Amount { get; set; }
 
