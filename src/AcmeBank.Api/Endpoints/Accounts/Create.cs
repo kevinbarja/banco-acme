@@ -27,20 +27,20 @@ namespace AcmeBank.Api.Endpoints.Accounts
         /// <remarks>
         /// Sample request:
         ///
-        ///    {
-        ///      "number": "441345",
-        ///      "type": "Savings",
-        ///      "initialBalance": 0,
-        ///      "isActive": true,
-        ///      "customerId": 14
-        ///    }
+        ///     {
+        ///         "number": "441345",
+        ///         "type": "Savings",
+        ///         "initialBalance": 0,
+        ///         "isActive": true,
+        ///         "customerId": 14
+        ///     }
         ///
         /// </remarks>
         /// <response code = "201" >Returns account created</response>
         /// <response code = "400" >Bad request</response>  
         [HttpPost("accounts", Name = "CreateAccount")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerOperation(OperationId = "CreateAccount", Tags = new[] { "Accounts" })]
+        [SwaggerOperation(OperationId = "CreateAccount", Tags = new[] { "Accounts and movements" })]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateAccountResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         public override async Task<ActionResult<CreateAccountResult>> HandleAsync(

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace AcmeBank.Persistence
+namespace AcmeBank.Persistence.Repositories
 {
     public class AsyncRepository<TEntity> : IAsyncRepository<TEntity> where TEntity : class
     {

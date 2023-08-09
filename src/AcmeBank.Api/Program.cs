@@ -1,5 +1,6 @@
 using AcmeBank.Contracts;
 using AcmeBank.Persistence;
+using AcmeBank.Persistence.Repositories;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext("Name=ConnectionStrings:AcmeBank");
 builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
@@ -73,5 +75,6 @@ app.MapControllers();
 //TODO: Add health checks
 //TODO: Add security
 //TODO: Add versioning
+//TODO: Linter
 app.Logger.LogInformation("Starting web host ({ApplicationName})...", "AcmeBank API");
 app.Run();

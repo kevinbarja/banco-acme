@@ -33,16 +33,16 @@ namespace AcmeBank.Api.Endpoints.Accounts.Movements
         ///
         /// POST accounts/5/movements
         /// 
-        ///    {
-        ///      "amount": 105.5
-        ///    }
+        ///     {
+        ///         "amount": 105.5
+        ///     }
         ///
         /// </remarks>
         /// <response code = "201" >Returns movement created</response>
         /// <response code = "400" >Bad request, account not exist</response>  
         [HttpPost("accounts/{AccountId}/movements", Name = "CreateMovement")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerOperation(OperationId = "CreateMovement", Tags = new[] { "Accounts" })]
+        [SwaggerOperation(OperationId = "CreateMovement", Tags = new[] { "Accounts and movements" })]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateAccountResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
         public override async Task<ActionResult<CreateMovementResult>> HandleAsync(
