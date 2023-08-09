@@ -41,9 +41,9 @@ namespace AcmeBank.Persistence.Repositories
                 Date = m.Date,
                 CustomerName = m.Account.Customer.FullName,
                 AccountType = (MovementType)m.Account.Type,
-                Balance = m.Balance,
+                InitialBalance = m.InitialBalance,
                 Amount = m.Amount,
-                AvailableBalance = (m.Amount < 0) ? m.Balance - m.Amount : m.Balance + m.Amount
+                Balance = m.Balance
             }).ToListAsync(cancellationToken);
             return movements;
         }

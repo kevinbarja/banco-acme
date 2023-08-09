@@ -7,6 +7,7 @@
         public DateTime Date { get; set; }
 
         public MovementType Type { get; set; }
+        public decimal InitialBalance { get; set; }
 
         public decimal Amount { get; set; }
 

@@ -21,9 +21,9 @@
         public DateTime Date { get; set; }
         public required string CustomerName { get; set; }
         public MovementType AccountType { get; set; }
-        public decimal Balance { get; set; }
+        public decimal InitialBalance { get; set; }
         public decimal Amount { get; set; }
-        public decimal AvailableBalance { get; set; }
+        public decimal Balance { get; set; }
 
     }
 
